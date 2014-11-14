@@ -1,0 +1,24 @@
+{
+select -cl;
+string $allList[] = `ls`;
+string $isolateList[];
+
+for ($i in $allList)
+  {
+  if (`nodeType $i` == "transform" || `nodeType $i` == "mesh")
+     {
+     $obj=($i + ".displaySmoothMesh");
+     if (`attributeExists "displaySmoothMesh" $i`)
+        {
+        if (`getAttr $obj` == 0)
+    	  select -add $i;
+        }
+     }
+  }
+
+string $c[] = `ls -sl`;
+string $panel = `getPanel -wf`;
+if (size($c)>0)
+    if ("modelPanel" == `getPanel -to $panel`)
+        enableIsolateSelect $panel true;
+}
